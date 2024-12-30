@@ -1,19 +1,13 @@
 package biblioteca;
 
-public class Professor implements ILivroReservado {
+import divisao.Setor;
 
-    private String nome;
-    private String login;
-    private String senha;
-    private String cpf;
-    private Setor lotacao;
+class Professor extends Funcionario implements ILivroReservado {
+
+    private Reserva reserva;
 
     public Professor(String nome, String login, String senha, String cpf, Setor lotacao) {
-        this.nome = nome;
-        this.login = login;
-        this.senha = senha;
-        this.cpf = cpf;
-        this.lotacao = lotacao;
+        super(nome, login, senha, cpf, lotacao);
     }
 
     @Override

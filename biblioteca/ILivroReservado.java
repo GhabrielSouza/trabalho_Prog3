@@ -1,8 +1,6 @@
 package biblioteca;
-import java.util.*;
 
-public class ILivroReservado {
-    void ocorreu(Reserva reserva);
-    String informarReserva();
-    
+public interface ILivroReservado {
+    public void ocorreu(Reserva reserva);
+    public String informarReserva();
 }

@@ -1,23 +1,14 @@
 package biblioteca;
 import java.util.ArrayList;
 import java.util.List;
+import divisao.Setor;
 
-public class Bibliotecario {
+public class Bibliotecario extends Funcionario implements ILivroReservado{
 
-    private list<Emprestimo> emprestimos;
-
-    private String nome;
-    private String login;
-    private String senha;
-    private String cpf;
-    private Setor lotacao;
+    private List<Emprestimo> emprestimos;
 
     public Bibliotecario(String nome, String login, String senha, String cpf, Setor lotacao) {
-        this.nome = nome;
-        this.login = login;
-        this.senha = senha;
-        this.cpf = cpf;
-        this.lotacao = lotacao;
+        super(nome, login, senha, lotacao);
         this.emprestimos = new ArrayList<>();
     }
 
@@ -36,5 +27,19 @@ public class Bibliotecario {
         }
     }
 
+    @Override
+    public void ocorreu(Reserva reserva) {
+        this.reserva = reserva;
+        System.out.println("Reserva registrada para o professor.");
+    }
+
+    @Override
+    public String informarReserva() {
+        if (reserva == null) {
+            return "Nenhuma reserva registrada.";
+        } else {
+            return "Reserva registrada: " + reserva.toString();
+        }
+    }
     
 }
