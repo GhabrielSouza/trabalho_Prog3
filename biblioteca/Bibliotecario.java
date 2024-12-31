@@ -2,6 +2,7 @@ package biblioteca;
 import java.util.ArrayList;
 import java.util.List;
 import divisao.Setor;
+import javax.swing.JOptionPane;
 
 public class Bibliotecario extends Funcionario implements ILivroReservado{
 
