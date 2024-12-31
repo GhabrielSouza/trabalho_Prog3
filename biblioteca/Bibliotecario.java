@@ -14,9 +14,9 @@ public class Bibliotecario extends Funcionario implements ILivroReservado{
 
 
     public void cadastrarEmprestimo(Reserva reserva){
-        Emprestimo emprestimo = new Emprestimo(Reserva);
+        Emprestimo emprestimo = new Emprestimo(reserva);
 
-        emprestimo.add(emprestimo);
+        emprestimos.add(emprestimo);
 
         System.out.println("Empréstimo cadastrado para a reserva: " + reserva.toString());
     }
