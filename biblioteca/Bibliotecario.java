@@ -18,34 +18,36 @@ public class Bibliotecario extends Funcionario implements ILivroReservado {
         Emprestimo emprestimo = new Emprestimo(reserva);
         emprestimos.add(emprestimo);
 
-        JOptionPane.showMessageDialog(null, "Empréstimo cadastrado para a reserva: " + reserva.toString(), "Cadastro de Empréstimo", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Empréstimo cadastrado para a reserva: " + reserva.toString(),
+                "Cadastro de Empréstimo", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void listarEmprestimos() {
         if (emprestimos.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Nenhum empréstimo cadastrado.", "Lista de Empréstimos", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Nenhum empréstimo cadastrado.", "Lista de Empréstimos",
+                    JOptionPane.INFORMATION_MESSAGE);
         } else {
             StringBuilder lista = new StringBuilder("Empréstimos cadastrados:\n");
             for (Emprestimo emprestimo : emprestimos) {
                 lista.append(emprestimo.toString()).append("\n");
             }
-            JOptionPane.showMessageDialog(null, lista.toString(), "Lista de Empréstimos", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, lista.toString(), "Lista de Empréstimos",
+                    JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
     @Override
     public void ocorreu(Reserva reserva) {
-        this.reserva = reserva;
-
-        JOptionPane.showMessageDialog(null, "Reserva registrada para o professor.", "Registro de Reserva", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null,"Reserva registrada para o professor: " + reserva.toString(), "Registro de Reserva", JOptionPane.INFORMATION_MESSAGE);
     }
 
     @Override
-    public String informarReserva() {
+    public String informarReserva(Reserva reserva) {
         if (reserva == null) {
             return "Nenhuma reserva registrada.";
         } else {
             return "Reserva registrada: " + reserva.toString();
         }
     }
+
 }
