@@ -27,5 +27,14 @@ private List<Livro> carregarLivros(List<String> tituloLivros){
         }
         return livrosCarregados;
 }
-    
+
+@Override
+public String toString() {
+    StringBuilder livrosStr = new StringBuilder();
+    for (Livro livro : livros) {
+        livrosStr.append(livro.getTitulo()).append(", ");
+    }
+    return "Reserva para o dia " + data + " com os livros: " + livrosStr.toString();
+}
+
 }

@@ -1,9 +1,11 @@
 package biblioteca;
+
 import java.util.ArrayList;
 import java.util.List;
 import divisao.Setor;
+import javax.swing.JOptionPane;
 
-public class Bibliotecario extends Funcionario implements ILivroReservado{
+public class Bibliotecario extends Funcionario implements ILivroReservado {
 
     private List<Emprestimo> emprestimos;
 
@@ -12,25 +14,30 @@ public class Bibliotecario extends Funcionario implements ILivroReservado{
         this.emprestimos = new ArrayList<>();
     }
 
-
-    public void cadastrarEmprestimo(Reserva reserva){
+    public void cadastrarEmprestimo(Reserva reserva) {
         Emprestimo emprestimo = new Emprestimo(reserva);
-
         emprestimos.add(emprestimo);
 
-        System.out.println("Empréstimo cadastrado para a reserva: " + reserva.toString());
+        JOptionPane.showMessageDialog(null, "Empréstimo cadastrado para a reserva: " + reserva.toString(), "Cadastro de Empréstimo", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void listarEmprestimos() {
-        for (Emprestimo emprestimo : emprestimos) {
-            System.out.println(emprestimo);
+        if (emprestimos.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhum empréstimo cadastrado.", "Lista de Empréstimos", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            StringBuilder lista = new StringBuilder("Empréstimos cadastrados:\n");
+            for (Emprestimo emprestimo : emprestimos) {
+                lista.append(emprestimo.toString()).append("\n");
+            }
+            JOptionPane.showMessageDialog(null, lista.toString(), "Lista de Empréstimos", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
     @Override
     public void ocorreu(Reserva reserva) {
         this.reserva = reserva;
-        System.out.println("Reserva registrada para o professor.");
+
+        JOptionPane.showMessageDialog(null, "Reserva registrada para o professor.", "Registro de Reserva", JOptionPane.INFORMATION_MESSAGE);
     }
 
     @Override
@@ -41,5 +48,4 @@ public class Bibliotecario extends Funcionario implements ILivroReservado{
             return "Reserva registrada: " + reserva.toString();
         }
     }
-    
 }

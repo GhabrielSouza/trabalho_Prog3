@@ -16,7 +16,7 @@ public class Exemplar {
     public int getCodigo(){
         return codigo;
     }
-
+q
     public int getSituacao(){
         return situacao;
     }
