@@ -42,12 +42,10 @@ public class Bibliotecario extends Funcionario implements ILivroReservado {
     }
 
     @Override
-    public String informarReserva(Reserva reserva) {
-        if (reserva == null) {
-            return "Nenhuma reserva registrada.";
-        } else {
-            return "Reserva registrada: " + reserva.toString();
-        }
+    public String informarReserva() {
+        String mensagem = "Reserva registrada com sucesso.";
+        JOptionPane.showMessageDialog(null, mensagem, "Registro de Reserva", JOptionPane.INFORMATION_MESSAGE);
+        return mensagem;
     }
 
 }
