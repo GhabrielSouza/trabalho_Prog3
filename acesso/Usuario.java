@@ -35,14 +35,30 @@ public class Usuario {
     }
 
     public String sair(){
-
+        return "Saindo...";
     }
 
-    public static <T> List<T> listar(){
+    @SuppressWarnings("unchecked")
+    public static <T> List<T> listar(Class<T> instaciaClasse){
+        List<T> instaciaDaClasse = new ArrayList<>();
+        
+        for(Usuario usuario : usuarios ){
+            if(instaciaClasse.isInstance(usuario)){
+                instaciaDaClasse.add((T) usuario);
+            }
+        }
 
+        return instaciaDaClasse;
     }
+
 
     public static Usuario obter(String login, String senha){
+        for(Usuario usuario : usuarios){
+            if(usuario.login.equals(login)  && usuario.senha.equals(senha)){
+                return usuario;
+            }
+        }
 
+        return null;
     }
 }
