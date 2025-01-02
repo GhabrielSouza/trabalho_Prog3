@@ -1,6 +1,9 @@
 package biblioteca;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import infraestrutura.Util;
 
 public class Emprestimo {
     private String dataRetirada;
@@ -8,7 +11,9 @@ public class Emprestimo {
     private List<Exemplar> exemplares;
 
     public Emprestimo(Reserva reserva) {
-        this.reserva = reserva;
+        dataDevolucao = Util.somarDiasData(dataRetirada, 0);
+        dataRetirada = reserva.getData();
+        exemplares = carregarExemplares( reserva.getLivros());
     }
 
     public String getDataRetidara(){
@@ -24,6 +29,11 @@ public class Emprestimo {
     }
 
     private List<Exemplar> carregarExemplares(List<Livro> livros){
-        
+        List<Exemplar> livrosExemplares = new ArrayList<>();
+        for(Livro livro : livros){
+            livrosExemplares.add(new Exemplar(livro));
+        }
+
+        return livrosExemplares;
     }
 }

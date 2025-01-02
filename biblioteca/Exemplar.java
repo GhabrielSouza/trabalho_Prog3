@@ -1,5 +1,7 @@
 package biblioteca;
 
+import infraestrutura.Util;
+
 public class Exemplar {
     private int codigo;
     private String dataAquisicao;
@@ -7,13 +9,14 @@ public class Exemplar {
     private Livro livro;
 
     public Exemplar(Livro livro){
-        this.livro = new Livro(livro);
+        this.livro = livro;
+        dataAquisicao = Util.obterDataAtual();
     }
 
     public int getCodigo(){
         return codigo;
     }
-
+q
     public int getSituacao(){
         return situacao;
     }
