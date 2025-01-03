@@ -1,8 +1,7 @@
 import javax.swing.JOptionPane;
 
 import acesso.Usuario;
-import biblioteca.Aluno;
-import biblioteca.ILivroReservado;
+import biblioteca.*;
 
 public class Principal {
 
