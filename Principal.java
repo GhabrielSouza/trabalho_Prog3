@@ -2,6 +2,7 @@ import javax.swing.JOptionPane;
 
 import acesso.Usuario;
 import biblioteca.Aluno;
+import biblioteca.ILivroReservado;
 
 public class Principal {
 
@@ -56,6 +57,10 @@ public class Principal {
     } 
 
     public static void processarFuncionalidade(Usuario usuario, int funcionalidadeSelecionada){
+
+    }
+
+    public static ILivroReservado selecionarConsumidor(Aluno usuario, boolean naListaProdutor){
 
     }
 
