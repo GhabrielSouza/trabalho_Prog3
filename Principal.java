@@ -1,4 +1,7 @@
+
+import javax.swing.JComboBox;
 import java.util.List;
+
 
 import javax.swing.JOptionPane;
 import java.util.ArrayList;
@@ -107,33 +110,81 @@ public class Principal {
             JOptionPane.showMessageDialog(null, "Usuário não autenticado.", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
+
+        List<Usuario> usuariosDisponiveis = Usuario.listar(Usuario.class);
+        List<Usuario> consumidores = new ArrayList<>();
+        int opcao;
     
         switch (funcionalidadeSelecionada) {
-            case 0: // Cadastrar Consumidor
-                JOptionPane.showMessageDialog(null, "Função Cadastrar Consumidor ainda não implementada.", "Info", JOptionPane.INFORMATION_MESSAGE);
-                break;
-    
+        case 0: 
+            // Cadastrar Consumidor
+            // Crie o JComboBox com os objetos Usuario diretamente
+            JComboBox<Usuario> comboBoxA = new JComboBox<>(usuariosDisponiveis.toArray(new Usuario[0]));
+
+            // Mostre o JComboBox em um JOptionPane
+            opcao = JOptionPane.showConfirmDialog(
+                null, 
+                comboBoxA, 
+                "Selecione um Usuário", 
+                JOptionPane.OK_CANCEL_OPTION, 
+                JOptionPane.PLAIN_MESSAGE
+            );
+
+            // Se o usuário pressionar OK, obtenha o objeto Usuario selecionado
+            if (opcao == JOptionPane.OK_OPTION) {
+                Usuario usuarioSelecionado = (Usuario) comboBoxA.getSelectedItem();
+                
+                consumidores.add(usuarioSelecionado);
+                usuariosDisponiveis.remove(usuarioSelecionado);
+
+                JOptionPane.showMessageDialog(null, "Usuário selecionado: " + usuarioSelecionado.getNome());
+                // Aqui você pode adicionar a lógica para cadastrar o consumidor, utilizando o usuarioSelecionado
+            }
+            break;
+
             case 1: // Remover Consumidor
-                JOptionPane.showMessageDialog(null, "Função Remover Consumidor ainda não implementada.", "Info", JOptionPane.INFORMATION_MESSAGE);
+                JComboBox<Usuario> comboBoxR = new JComboBox<>(consumidores.toArray(new Usuario[0]));
+
+                // Mostre o JComboBox em um JOptionPane
+                opcao = JOptionPane.showConfirmDialog(
+                    null, 
+                    comboBoxR, 
+                    "Selecione um Usuário", 
+                    JOptionPane.OK_CANCEL_OPTION, 
+                    JOptionPane.PLAIN_MESSAGE
+                );
+
+                // Se o usuário pressionar OK, obtenha o objeto Usuario selecionado
+                if (opcao == JOptionPane.OK_OPTION) {
+                    Usuario usuarioSelecionado = (Usuario) comboBoxR.getSelectedItem();
+                    
+                    usuariosDisponiveis.add(usuarioSelecionado);
+                    consumidores.remove(usuarioSelecionado);
+
+                    JOptionPane.showMessageDialog(null, "Usuário selecionado: " + usuarioSelecionado.getNome());
+                    // Aqui você pode adicionar a lógica para cadastrar o consumidor, utilizando o usuarioSelecionado
+                }
                 break;
-    
+
             case 2: // Cadastrar Reserva
                 JOptionPane.showMessageDialog(null, "Função Cadastrar Reserva ainda não implementada.", "Info", JOptionPane.INFORMATION_MESSAGE);
                 break;
-    
+
             case 3: // Sair
-                sair(usuario);
+                for (Usuario consumidor : consumidores) {
+                    sair(consumidor);
+                }
                 break;
-    
+
             default:
                 JOptionPane.showMessageDialog(null, "Opção inválida. Tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
                 break;
         }
     }
 
-    public static ILivroReservado selecionarConsumidor(Aluno usuario, boolean naListaProdutor){
+    /*public static ILivroReservado selecionarConsumidor(Aluno usuario, boolean naListaProdutor){
 
-    }
+    }*/
 
     public static void listarLivros() {
         List<String> titulos = Livro.listar();
