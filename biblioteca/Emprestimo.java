@@ -16,7 +16,7 @@ public class Emprestimo {
         exemplares = carregarExemplares( reserva.getLivros());
     }
 
-    public String getDataRetidara(){
+    public String getDataRetirada(){
         return dataRetirada;
     }
 

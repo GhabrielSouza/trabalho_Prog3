@@ -1,6 +1,10 @@
 import javax.swing.JOptionPane;
+import java.util.ArrayList;
+import java.util.List;
+
 
 import acesso.Usuario;
+import acesso.*;
 import biblioteca.*;
 
 public class Principal {
@@ -167,7 +171,7 @@ public class Principal {
 
     public static void sair(Usuario usuario) {
         StringBuilder mensagemInfoUsuario = new StringBuilder("Informacoes do Usuario:\n\n");
-        Emprestimo emprestimo = new emprestimos.getExemplares();
+        Emprestimo emprestimo = new emprestimo.getExemplares();
 
         mensagemInfoUsuario.append("Data de Retirada: ").append(emprestimo.getDataRetirada()).append("\n");
         mensagemInfoUsuario.append("Data de Devolução: ").append(emprestimo.getDataDevolucao()).append("\n\n");
