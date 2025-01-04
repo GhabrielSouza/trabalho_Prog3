@@ -20,20 +20,17 @@ class Professor extends Funcionario implements ILivroReservado {
 
     @Override
     public String informarReserva() {
-        if (reservas == null || reservas.isEmpty()) {
+        if (reserva == null) {
             String mensagemSemRegistro = "Nao ha reservas registradas.";
             JOptionPane.showMessageDialog(null, mensagemSemRegistro, "Informacoes de Reservas", JOptionPane.INFORMATION_MESSAGE);
             return mensagemSemRegistro;
         }
 
-        StringBuilder mensagem = new StringBuilder("Reservas do Professor:\n\n");
+        StringBuilder mensagem = new StringBuilder("Reserva do Professor:\n\n");
 
-        for (Reserva reserva : reservas) {
-            mensagem.append("Data de Reserva: ").append(reserva.getData()).append("\n");
-            for (Livro livro : reserva.getLivros()) {
-                mensagem.append("Livro: ").append(livro.getTitulo()).append("\n");
-            }
-            mensagem.append("\n");
+        mensagem.append("Data de Reserva: ").append(reserva.getData()).append("\n");
+        for (Livro livro : reserva.getLivros()) {
+            mensagem.append("Livro: ").append(livro.getTitulo()).append("\n");
         }
 
         JOptionPane.showMessageDialog(null, mensagem.toString(), "Informacoes de Reservas", JOptionPane.INFORMATION_MESSAGE);
