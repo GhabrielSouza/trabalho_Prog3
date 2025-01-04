@@ -44,9 +44,31 @@ public class Bibliotecario extends Funcionario implements ILivroReservado {
 
     @Override
     public String informarReserva() {
-        String mensagem = "Reserva registrada com sucesso.";
-        JOptionPane.showMessageDialog(null, mensagem, "Registro de Reserva", JOptionPane.INFORMATION_MESSAGE);
-        return mensagem;
+        if (emprestimos.isEmpty()) {
+            String mensagemSemRegistro = "Nao ha reservas registradas.";
+            JOptionPane.showMessageDialog(null, mensagemSemRegistro, "Informacoes de Reservas",
+                    JOptionPane.INFORMATION_MESSAGE);
+            return mensagemSemRegistro;
+        }
+
+        StringBuilder mensagem = new StringBuilder("Informacoes de Reservas:\n\n");
+
+        for (Emprestimo emprestimo : emprestimos) {
+            mensagem.append("Data de Retirada: ").append(emprestimo.getDataRetirada()).append("\n");
+            mensagem.append("Data de Devolucao: ").append(emprestimo.getDataDevolucao()).append("\n\n");
+
+            for (Exemplar exemplar : emprestimo.getExemplares()) {
+                Livro livro = exemplar.getLivro();
+                mensagem.append("Livro: ").append(livro.getTitulo()).append("\n");
+                mensagem.append("Autor: ").append(livro.getAutor()).append("\n");
+                mensagem.append("Editora: ").append(livro.getEditora()).append("\n");
+                mensagem.append("Exemplar Codigo: ").append(exemplar.getCodigo()).append("\n");
+                mensagem.append("Situação: ").append(exemplar.getSituacao()).append("\n\n");
+            }
+        }
+
+        JOptionPane.showMessageDialog(null, mensagem.toString(), "Informacoes de Reservas", JOptionPane.INFORMATION_MESSAGE);
+        return mensagem.toString();
     }
 
 }
