@@ -37,6 +37,34 @@ public class Principal {
         return null;
     }
 
+
+    public static String[] construirMenu(Usuario usuario) {
+        // Obtém as funcionalidades diretamente do objeto 'usuario' usando o método 'getFuncionalidade'
+        List<Funcionalidade> funcionalidadesList = usuario.getFuncionalidade();
+        
+        // Se a lista for nula ou estiver vazia, retorna um array vazio
+        if (funcionalidadesList == null || funcionalidadesList.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhuma funcionalidade disponível.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return new String[] {};
+        }
+        
+        // Converte a lista de funcionalidades para um array de strings para exibição no menu
+        String[] funcionalidadesMenu = new String[funcionalidadesList.size()];
+        for (int i = 0; i < funcionalidadesList.size(); i++) {
+            funcionalidadesMenu[i] = funcionalidadesList.get(i).toString(); // Adapte conforme a implementação de 'toString' de Funcionalidade
+        }
+
+        // Chama a função selecionarFuncionalidade para obter a funcionalidade escolhida
+        int funcionalidadeSelecionada = selecionarFuncionalidade(funcionalidadesMenu);
+        
+        // Se o usuário selecionar uma opção válida, retorna um array com a opção escolhida
+        if (funcionalidadeSelecionada != -1) {
+            return new String[] { funcionalidadesMenu[funcionalidadeSelecionada] };
+        } else {
+            return new String[] {}; // Retorna um array vazio se nenhuma funcionalidade for selecionada
+        }
+    }
+    
     public static int selecionarFuncionalidade(String[] funcionalidadesMenu) {
         if (funcionalidadesMenu == null || funcionalidadesMenu.length == 0) {
             JOptionPane.showMessageDialog(null, "Nenhuma funcionalidade disponível.", "Erro", JOptionPane.ERROR_MESSAGE);
