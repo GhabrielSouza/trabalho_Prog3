@@ -2,8 +2,6 @@ import javax.swing.JOptionPane;
 import java.util.ArrayList;
 import java.util.List;
 
-
-import acesso.Usuario;
 import acesso.*;
 import biblioteca.*;
 
@@ -170,29 +168,15 @@ public class Principal {
     }
 
     public static void sair(Usuario usuario) {
-        StringBuilder mensagemInfoUsuario = new StringBuilder("Informacoes do Usuario:\n\n");
-        Emprestimo emprestimo = new emprestimo.getExemplares();
 
-        mensagemInfoUsuario.append("Data de Retirada: ").append(emprestimo.getDataRetirada()).append("\n");
-        mensagemInfoUsuario.append("Data de Devolução: ").append(emprestimo.getDataDevolucao()).append("\n\n");
-
-        for (Exemplar exemplar : emprestimo.getExemplares()) {
-            Livro livro = exemplar.getLivro();
-            mensagemInfoUsuario.append("Livro: ").append(livro.getTitulo()).append("\n");
-            mensagemInfoUsuario.append("Autor: ").append(livro.getAutor()).append("\n");
-            mensagemInfoUsuario.append("Editora: ").append(livro.getEditora()).append("\n");
-            mensagemInfoUsuario.append("Exemplar Código: ").append(exemplar.getCodigo()).append("\n");
-            mensagemInfoUsuario.append("Situação: ").append(exemplar.getSituacao()).append("\n\n");
-
-        JOptionPane.showMessageDialog(null, mensagemInfoUsuario.toString(), "Informações do Empréstimo", JOptionPane.INFORMATION_MESSAGE);
-
-        // -----------------------------------
-        
-        String nomeUsuario = usuario.getNome();
-        String tipoUsuario = usuario.getClass().getSimpleName();
-        String mensagem = "O usuario " + nomeUsuario + ", do tipo " + tipoUsuario + ", deixou o sistema.";
-
-        JOptionPane.showMessageDialog(null, mensagem, "Saida do Sistema", JOptionPane.INFORMATION_MESSAGE);
+        // Verifica se o usuário tem uma reserva
+        if (usuario instanceof ILivroReservado) {
+            ILivroReservado livroReservado = (ILivroReservado) usuario;
+            JOptionPane.showMessageDialog(null, livroReservado.informarReserva(),
+                    "Informação de Reserva", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, usuario.getNome() + " não tem reservas.",
+                    "Sem Reservas", JOptionPane.WARNING_MESSAGE);
         }
     }
 }
