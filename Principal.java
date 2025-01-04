@@ -1,11 +1,7 @@
-import java.util.List;
-
 import javax.swing.JOptionPane;
 
-import acesso.Funcionalidade;
 import acesso.Usuario;
-import biblioteca.Aluno;
-import biblioteca.ILivroReservado;
+import biblioteca.*;
 
 public class Principal {
 
@@ -39,33 +35,6 @@ public class Principal {
 
         JOptionPane.showMessageDialog(null, "Login ou senha inválidos. Tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
         return null;
-    }
-
-    public static String[] construirMenu(Usuario usuario) {
-        // Obtém as funcionalidades diretamente do objeto 'usuario' usando o método 'getFuncionalidade'
-        List<Funcionalidade> funcionalidadesList = usuario.getFuncionalidade();
-        
-        // Se a lista for nula ou estiver vazia, retorna um array vazio
-        if (funcionalidadesList == null || funcionalidadesList.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Nenhuma funcionalidade disponível.", "Erro", JOptionPane.ERROR_MESSAGE);
-            return new String[] {};
-        }
-        
-        // Converte a lista de funcionalidades para um array de strings para exibição no menu
-        String[] funcionalidadesMenu = new String[funcionalidadesList.size()];
-        for (int i = 0; i < funcionalidadesList.size(); i++) {
-            funcionalidadesMenu[i] = funcionalidadesList.get(i).toString(); // Adapte conforme a implementação de 'toString' de Funcionalidade
-        }
-
-        // Chama a função selecionarFuncionalidade para obter a funcionalidade escolhida
-        int funcionalidadeSelecionada = selecionarFuncionalidade(funcionalidadesMenu);
-        
-        // Se o usuário selecionar uma opção válida, retorna um array com a opção escolhida
-        if (funcionalidadeSelecionada != -1) {
-            return new String[] { funcionalidadesMenu[funcionalidadeSelecionada] };
-        } else {
-            return new String[] {}; // Retorna um array vazio se nenhuma funcionalidade for selecionada
-        }
     }
 
     public static int selecionarFuncionalidade(String[] funcionalidadesMenu) {
@@ -134,15 +103,63 @@ public class Principal {
 
     }
 
-    public static void listarLivros(){
+    public static void listarLivros() {
+        List<String> titulos = Livro.listar();
 
+        if (titulos.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhum livro registrado na biblioteca.", "Lista de Livros",
+                    JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        StringBuilder mensagem = new StringBuilder("Livros registrados na biblioteca:\n");
+        for (String titulo : titulos) {
+            mensagem.append("- ").append(titulo).append("\n");
+        }
+
+        JOptionPane.showMessageDialog(null, mensagem.toString(), "Lista de Livros", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public static void exibirMensagemConsumidores(Aluno aluno){
+    public static void exibirMensagemConsumidores(Aluno aluno) {
+        List<ILivroReservado> consumidores = aluno.getConsumidores();
 
+        if (consumidores == null || consumidores.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhum consumidor registrado para este aluno.", "Consumidores",
+                    JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        StringBuilder mensagem = new StringBuilder("Consumidores registrados:\n");
+        for (ILivroReservado consumidor : consumidores) {
+            mensagem.append(consumidor.toString()).append("\n");
+        }
+
+        JOptionPane.showMessageDialog(null, mensagem.toString(), "Consumidores", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public static void sair(Usuario usuario){
+    public static void sair(Usuario usuario) {
+        StringBuilder mensagemInfoUsuario = new StringBuilder("Informacoes do Usuario:\n\n");
+        Emprestimo emprestimo = new emprestimos.getExemplares();
 
+        mensagemInfoUsuario.append("Data de Retirada: ").append(emprestimo.getDataRetirada()).append("\n");
+        mensagemInfoUsuario.append("Data de Devolução: ").append(emprestimo.getDataDevolucao()).append("\n\n");
+
+        for (Exemplar exemplar : emprestimo.getExemplares()) {
+            Livro livro = exemplar.getLivro();
+            mensagemInfoUsuario.append("Livro: ").append(livro.getTitulo()).append("\n");
+            mensagemInfoUsuario.append("Autor: ").append(livro.getAutor()).append("\n");
+            mensagemInfoUsuario.append("Editora: ").append(livro.getEditora()).append("\n");
+            mensagemInfoUsuario.append("Exemplar Código: ").append(exemplar.getCodigo()).append("\n");
+            mensagemInfoUsuario.append("Situação: ").append(exemplar.getSituacao()).append("\n\n");
+
+        JOptionPane.showMessageDialog(null, mensagemInfoUsuario.toString(), "Informações do Empréstimo", JOptionPane.INFORMATION_MESSAGE);
+
+        // -----------------------------------
+        
+        String nomeUsuario = usuario.getNome();
+        String tipoUsuario = usuario.getClass().getSimpleName();
+        String mensagem = "O usuario " + nomeUsuario + ", do tipo " + tipoUsuario + ", deixou o sistema.";
+
+        JOptionPane.showMessageDialog(null, mensagem, "Saida do Sistema", JOptionPane.INFORMATION_MESSAGE);
     }
 }
