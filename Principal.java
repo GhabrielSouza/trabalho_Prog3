@@ -39,26 +39,94 @@ public class Principal {
         return null;
     }
 
-    public static String[] construirMenu(Usuario usuario){
-        Object[] options = { "Cadastrar Consumidor", "Remover Consumidor", "Cadastrar Reserva", "Sair" }; 
 
-         int opcoes =   JOptionPane.showOptionDialog(null, "Selecione a opção desejada:", "Aviso", 
-             JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, 
-             null, options, options[0]);
-
-        if(opcoes == JOptionPane.CLOSED_OPTION){
-            return new String[]{};
-        }    
+    public static String[] construirMenu(Usuario usuario) {
+        // Obtém as funcionalidades diretamente do objeto 'usuario' usando o método 'getFuncionalidade'
+        List<Funcionalidade> funcionalidadesList = usuario.getFuncionalidade();
         
-        return new String[] {options[opcoes].toString()};
+        // Se a lista for nula ou estiver vazia, retorna um array vazio
+        if (funcionalidadesList == null || funcionalidadesList.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhuma funcionalidade disponível.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return new String[] {};
+        }
+        
+        // Converte a lista de funcionalidades para um array de strings para exibição no menu
+        String[] funcionalidadesMenu = new String[funcionalidadesList.size()];
+        for (int i = 0; i < funcionalidadesList.size(); i++) {
+            funcionalidadesMenu[i] = funcionalidadesList.get(i).toString(); // Adapte conforme a implementação de 'toString' de Funcionalidade
+        }
+
+        // Chama a função selecionarFuncionalidade para obter a funcionalidade escolhida
+        int funcionalidadeSelecionada = selecionarFuncionalidade(funcionalidadesMenu);
+        
+        // Se o usuário selecionar uma opção válida, retorna um array com a opção escolhida
+        if (funcionalidadeSelecionada != -1) {
+            return new String[] { funcionalidadesMenu[funcionalidadeSelecionada] };
+        } else {
+            return new String[] {}; // Retorna um array vazio se nenhuma funcionalidade for selecionada
+        }
+    }
+    
+    public static int selecionarFuncionalidade(String[] funcionalidadesMenu) {
+        if (funcionalidadesMenu == null || funcionalidadesMenu.length == 0) {
+            JOptionPane.showMessageDialog(null, "Nenhuma funcionalidade disponível.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return -1;
+        }
+    
+        // Constrói a lista de funcionalidades em formato de String para exibição no JOptionPane
+        StringBuilder funcionalidadesList = new StringBuilder("Selecione uma funcionalidade:\n");
+        for (int i = 0; i < funcionalidadesMenu.length; i++) {
+            funcionalidadesList.append((i + 1) + ". " + funcionalidadesMenu[i] + "\n");
+        }
+    
+        // Exibe as funcionalidades com JOptionPane
+        String input = JOptionPane.showInputDialog(null, funcionalidadesList.toString(), "Escolha uma funcionalidade", JOptionPane.QUESTION_MESSAGE);
+        
+        try {
+            if (input != null && !input.isEmpty()) {
+                int escolha = Integer.parseInt(input);
+                if (escolha >= 1 && escolha <= funcionalidadesMenu.length) {
+                    return escolha - 1; // Retorna o índice da funcionalidade selecionada
+                } else {
+                    JOptionPane.showMessageDialog(null, "Opção inválida. Tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return -1;
+                }
+            } else {
+                return -1; // Caso o input seja nulo ou vazio
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Entrada inválida. Por favor, insira um número válido.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return -1;
+        }
     }
 
-    public static int selecionarFuncionalidade(String[] funcionalidadesMenu){
-        
-    } 
-
-    public static void processarFuncionalidade(Usuario usuario, int funcionalidadeSelecionada){
-
+    public static void processarFuncionalidade(Usuario usuario, int funcionalidadeSelecionada) {
+        if (usuario == null) {
+            JOptionPane.showMessageDialog(null, "Usuário não autenticado.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+    
+        switch (funcionalidadeSelecionada) {
+            case 0: // Cadastrar Consumidor
+                JOptionPane.showMessageDialog(null, "Função Cadastrar Consumidor ainda não implementada.", "Info", JOptionPane.INFORMATION_MESSAGE);
+                break;
+    
+            case 1: // Remover Consumidor
+                JOptionPane.showMessageDialog(null, "Função Remover Consumidor ainda não implementada.", "Info", JOptionPane.INFORMATION_MESSAGE);
+                break;
+    
+            case 2: // Cadastrar Reserva
+                JOptionPane.showMessageDialog(null, "Função Cadastrar Reserva ainda não implementada.", "Info", JOptionPane.INFORMATION_MESSAGE);
+                break;
+    
+            case 3: // Sair
+                sair(usuario);
+                break;
+    
+            default:
+                JOptionPane.showMessageDialog(null, "Opção inválida. Tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
+                break;
+        }
     }
 
     public static ILivroReservado selecionarConsumidor(Aluno usuario, boolean naListaProdutor){
@@ -123,5 +191,6 @@ public class Principal {
         String mensagem = "O usuario " + nomeUsuario + ", do tipo " + tipoUsuario + ", deixou o sistema.";
 
         JOptionPane.showMessageDialog(null, mensagem, "Saida do Sistema", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 }
