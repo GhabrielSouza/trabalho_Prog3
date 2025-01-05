@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class Aluno extends Usuario implements IReservouLivro  {
     private int matricula;
-    private List<Reserva> reservas;
+    private List<Reserva> reservas = new ArrayList<>();
     private List<ILivroReservado> consumidores;
     private static List<Funcionalidade> funcionalidades;
 
@@ -18,6 +18,9 @@ public class Aluno extends Usuario implements IReservouLivro  {
         this.matricula = matricula;
     }
 
+    public List<Reserva> getReservas() {
+        return reservas;
+    }
     public List<ILivroReservado> getConsumidores(){
         return consumidores;
     }
@@ -25,6 +28,7 @@ public class Aluno extends Usuario implements IReservouLivro  {
     public void cadastrarReserva(List<String> tituloLivros, String data){
         for (String titulo : tituloLivros) {
                 Reserva reserva = new Reserva(data, tituloLivros );
+                reservas.add(reserva);
         }
     }
 

@@ -1,9 +1,9 @@
 package acesso;
 
 public enum Funcionalidade {
-    CAD_CONS("REM_CONS"),
-    REM_CONS("REM_CONS"),
-    CAD_RESE("CAD_RESE");
+    CAD_CONS("Cadastro de Consumidor"),
+    REM_CONS("Remover Consumidor"),
+    CAD_RESE("Cadastro de Reserva");
 
     private final String sigla;
 
