@@ -10,19 +10,22 @@ public class Usuario {
     private String senha;
 
     private List<Funcionalidade> funcionalidades;
-    private static List<Usuario> usuarios = new ArrayList<>();
+    private static List<Usuario> usuarios = null;
 
 
     public Usuario(String nome, String login, String senha){
         this.nome = nome;
         this.login = login;
         this.senha = senha;
+
+        if (usuarios == null) {
+            usuarios = new ArrayList<>();
+        }
+        usuarios.add(this);
     }
 
     public Usuario(String nome, String login, String senha, List<Funcionalidade> funcionalidades){
-        this.nome = nome;
-        this.login = login;
-        this.senha = senha;
+        this(nome, login, senha);
         this.funcionalidades = funcionalidades;
     }
 
