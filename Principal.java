@@ -2,10 +2,8 @@
 import javax.swing.JComboBox;
 import java.util.List;
 
-
 import javax.swing.JOptionPane;
 import java.util.Date;
-
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -18,15 +16,20 @@ import biblioteca.*;
 
 public class Principal {
 
-    private static String TITULO = "Sistema Bibliotecário | v1.0"; 
+    private static String TITULO = "Sistema Bibliotecário | v1.0";
+
     public static void main(String[] args) {
-        
-        Usuario usuarioLogado = Principal.autenticar();
+
+        Usuario usuarioLogado = null;
+        // while (usuarioLogado == null) {
+        usuarioLogado = Principal.autenticar();
+        // }
 
         String[] opcoesMenu = construirMenu(usuarioLogado); // Gera as opções do menu
-    
-        if (opcoesMenu.length == 0) return; // Sai se não houver funcionalidades
-    
+
+        if (opcoesMenu.length == 0)
+            return; // Sai se não houver funcionalidades
+
         while (true) {
             int escolha = JOptionPane.showOptionDialog(
                     null,
@@ -36,102 +39,126 @@ public class Principal {
                     JOptionPane.INFORMATION_MESSAGE,
                     null,
                     opcoesMenu,
-                    opcoesMenu[0]
-            );
-    
+                    opcoesMenu[0]);
+
             if (escolha == -1) {
                 JOptionPane.showMessageDialog(null, "Menu encerrado.");
                 break;
             }
-    
+
             Principal.processarFuncionalidade(usuarioLogado, escolha);
-            
+
         }
-        
+
     }
 
-    public static Usuario autenticar(){
-        String loginValue = JOptionPane.showInputDialog(null, "Digite seu login","Informe seu login:", JOptionPane.QUESTION_MESSAGE );
-        String senhaValue = JOptionPane.showInputDialog(null, "Digite sua senha","Informe seu senha:", JOptionPane.QUESTION_MESSAGE );
-
-        if(loginValue == null || loginValue.isEmpty() ){
-            JOptionPane.showMessageDialog(null, "Login e senha não podem estar vazios.", "Erro", JOptionPane.WARNING_MESSAGE);
-            return null;
-        }
-
-        if(senhaValue == null || senhaValue.isEmpty() ){
-            JOptionPane.showMessageDialog(null, "Login e senha não podem estar vazios.", "Erro", JOptionPane.WARNING_MESSAGE);
-            return null;
-        }
-
-        if(loginValue != null && senhaValue != null){
+    public static Usuario autenticar() {
+        boolean logado = false;
+    
+        while (!logado) {
+            // Solicitar login
+            String loginValue = JOptionPane.showInputDialog(null, "Digite seu login", "Informe seu login:",
+                    JOptionPane.QUESTION_MESSAGE);
+            if (loginValue == null) { // Verifica se foi clicado em "Cancelar"
+                return null; // Encerra o método e cancela o login
+            }
+    
+            // Solicitar senha
+            String senhaValue = JOptionPane.showInputDialog(null, "Digite sua senha", "Informe sua senha:",
+                    JOptionPane.QUESTION_MESSAGE);
+            if (senhaValue == null) { // Verifica se foi clicado em "Cancelar"
+                return null; // Encerra o método e cancela o login
+            }
+    
+            // Validar campos vazios
+            if (loginValue.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Login não pode estar vazio.", "Erro",
+                        JOptionPane.WARNING_MESSAGE);
+                continue;
+            }
+    
+            if (senhaValue.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Senha não pode estar vazia.", "Erro",
+                        JOptionPane.WARNING_MESSAGE);
+                continue;
+            }
+    
+            // Tentar obter o usuário
             Usuario usuarioValue = Usuario.obter(loginValue, senhaValue);
-
-            if(usuarioValue != null){
-                JOptionPane.showMessageDialog(null, "Usuário logado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-                return usuarioValue;
+            if (usuarioValue != null) {
+                JOptionPane.showMessageDialog(null, "Usuário logado com sucesso!", "Sucesso",
+                        JOptionPane.INFORMATION_MESSAGE);
+                return usuarioValue; // Login bem-sucedido, retorna o usuário
+            } else {
+                JOptionPane.showMessageDialog(null, "Login ou senha inválidos. Tente novamente.", "Erro",
+                        JOptionPane.ERROR_MESSAGE);
             }
         }
-
-        JOptionPane.showMessageDialog(null, "Login ou senha inválidos. Tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
-        return null;
+    
+        return null; // Caso algo falhe, retorna null
     }
 
-
     public static String[] construirMenu(Usuario usuario) {
-        // Obtém as funcionalidades diretamente do objeto 'usuario' usando o método 'getFuncionalidade'
+        // Obtém as funcionalidades diretamente do objeto 'usuario' usando o método
+        // 'getFuncionalidade'
         List<Funcionalidade> funcionalidadesList = usuario.getFuncionalidade();
-        
+
         // Se a lista for nula ou estiver vazia, retorna apenas a opção "Sair"
         if (funcionalidadesList == null || funcionalidadesList.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Nenhuma funcionalidade disponível.", "Erro", JOptionPane.ERROR_MESSAGE);
-            return new String[] {"Sair"};
+            JOptionPane.showMessageDialog(null, "Nenhuma funcionalidade disponível.", "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+            return new String[] { "Sair" };
         }
-        
+
         // Converte a lista de funcionalidades em um vetor de Strings com as siglas
         String[] funcionalidades = funcionalidadesList.stream()
-                                                      .map(Funcionalidade::getSigla)
-                                                      .toArray(String[]::new);
-    
+                .map(Funcionalidade::getSigla)
+                .toArray(String[]::new);
+
         // Cria um novo vetor com espaço adicional para a opção "Sair"
         String[] menu = new String[funcionalidades.length + 1];
         System.arraycopy(funcionalidades, 0, menu, 0, funcionalidades.length);
-    
+
         // Adiciona a opção fixa "Sair" no final
         menu[menu.length - 1] = "Sair";
-    
+
         return menu;
     }
-    
+
     public static int selecionarFuncionalidade(String[] funcionalidadesMenu) {
         if (funcionalidadesMenu == null || funcionalidadesMenu.length == 0) {
-            JOptionPane.showMessageDialog(null, "Nenhuma funcionalidade disponível.", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Nenhuma funcionalidade disponível.", "Erro",
+                    JOptionPane.ERROR_MESSAGE);
             return -1;
         }
-    
-        // Constrói a lista de funcionalidades em formato de String para exibição no JOptionPane
+
+        // Constrói a lista de funcionalidades em formato de String para exibição no
+        // JOptionPane
         StringBuilder funcionalidadesList = new StringBuilder("Selecione uma funcionalidade:\n");
         for (int i = 0; i < funcionalidadesMenu.length; i++) {
             funcionalidadesList.append((i + 1) + ". " + funcionalidadesMenu[i] + "\n");
         }
-    
+
         // Exibe as funcionalidades com JOptionPane
-        String input = JOptionPane.showInputDialog(null, funcionalidadesList.toString(), "Escolha uma funcionalidade", JOptionPane.QUESTION_MESSAGE);
-        
+        String input = JOptionPane.showInputDialog(null, funcionalidadesList.toString(), "Escolha uma funcionalidade",
+                JOptionPane.QUESTION_MESSAGE);
+
         try {
             if (input != null && !input.isEmpty()) {
                 int escolha = Integer.parseInt(input);
                 if (escolha >= 1 && escolha <= funcionalidadesMenu.length) {
                     return escolha - 1; // Retorna o índice da funcionalidade selecionada
                 } else {
-                    JOptionPane.showMessageDialog(null, "Opção inválida. Tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Opção inválida. Tente novamente.", "Erro",
+                            JOptionPane.ERROR_MESSAGE);
                     return -1;
                 }
             } else {
                 return -1; // Caso o input seja nulo ou vazio
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Entrada inválida. Por favor, insira um número válido.", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Entrada inválida. Por favor, insira um número válido.", "Erro",
+                    JOptionPane.ERROR_MESSAGE);
             return -1;
         }
     }
@@ -145,59 +172,59 @@ public class Principal {
         List<Usuario> usuariosDisponiveis = Usuario.listar(Usuario.class);
         List<Usuario> consumidores = new ArrayList<>();
         int opcao;
-    
+
         switch (funcionalidadeSelecionada) {
-        case 0: 
-            // Cadastrar Consumidor
-            // Crie o JComboBox com os objetos Usuario diretamente
-            JComboBox<Usuario> comboBoxA = new JComboBox<>(usuariosDisponiveis.toArray(new Usuario[0]));
+            case 0:
+                // Cadastrar Consumidor
+                // Crie o JComboBox com os objetos Usuario diretamente
+                JComboBox<Usuario> comboBoxA = new JComboBox<>(usuariosDisponiveis.toArray(new Usuario[0]));
 
-            // Mostre o JComboBox em um JOptionPane
-            opcao = JOptionPane.showConfirmDialog(
-                null, 
-                comboBoxA, 
-                "Selecione um Usuário", 
-                JOptionPane.OK_CANCEL_OPTION, 
-                JOptionPane.PLAIN_MESSAGE
-            );
+                // Mostre o JComboBox em um JOptionPane
+                opcao = JOptionPane.showConfirmDialog(
+                        null,
+                        comboBoxA,
+                        "Selecione um Usuário",
+                        JOptionPane.OK_CANCEL_OPTION,
+                        JOptionPane.PLAIN_MESSAGE);
 
-            // Se o usuário pressionar OK, obtenha o objeto Usuario selecionado
-            if (opcao == JOptionPane.OK_OPTION) {
-                Usuario usuarioSelecionado = (Usuario) comboBoxA.getSelectedItem();
-                
-                consumidores.add(usuarioSelecionado);
-                usuariosDisponiveis.remove(usuarioSelecionado);
+                // Se o usuário pressionar OK, obtenha o objeto Usuario selecionado
+                if (opcao == JOptionPane.OK_OPTION) {
+                    Usuario usuarioSelecionado = (Usuario) comboBoxA.getSelectedItem();
 
-                JOptionPane.showMessageDialog(null, "Usuário selecionado: " + usuarioSelecionado.getNome());
-                // Aqui você pode adicionar a lógica para cadastrar o consumidor, utilizando o usuarioSelecionado
-            }
-            break;
+                    consumidores.add(usuarioSelecionado);
+                    usuariosDisponiveis.remove(usuarioSelecionado);
+
+                    JOptionPane.showMessageDialog(null, "Usuário selecionado: " + usuarioSelecionado.getNome());
+                    // Aqui você pode adicionar a lógica para cadastrar o consumidor, utilizando o
+                    // usuarioSelecionado
+                }
+                break;
 
             case 1: // Remover Consumidor
                 JComboBox<Usuario> comboBoxR = new JComboBox<>(consumidores.toArray(new Usuario[0]));
 
                 // Mostre o JComboBox em um JOptionPane
                 opcao = JOptionPane.showConfirmDialog(
-                    null, 
-                    comboBoxR, 
-                    "Selecione um Usuário", 
-                    JOptionPane.OK_CANCEL_OPTION, 
-                    JOptionPane.PLAIN_MESSAGE
-                );
+                        null,
+                        comboBoxR,
+                        "Selecione um Usuário",
+                        JOptionPane.OK_CANCEL_OPTION,
+                        JOptionPane.PLAIN_MESSAGE);
 
                 // Se o usuário pressionar OK, obtenha o objeto Usuario selecionado
                 if (opcao == JOptionPane.OK_OPTION) {
                     Usuario usuarioSelecionado = (Usuario) comboBoxR.getSelectedItem();
-                    
+
                     usuariosDisponiveis.add(usuarioSelecionado);
                     consumidores.remove(usuarioSelecionado);
 
                     JOptionPane.showMessageDialog(null, "Usuário selecionado: " + usuarioSelecionado.getNome());
-                    // Aqui você pode adicionar a lógica para cadastrar o consumidor, utilizando o usuarioSelecionado
+                    // Aqui você pode adicionar a lógica para cadastrar o consumidor, utilizando o
+                    // usuarioSelecionado
                 }
                 break;
 
-                case 2:
+            case 2:
                 // Listar todos os títulos de livros na biblioteca
                 List<String> tituloLivros = Livro.listar();
 
@@ -213,7 +240,8 @@ public class Principal {
                 }
 
                 // Exibe os títulos em um JOptionPane
-                JOptionPane.showMessageDialog(null, livrosStr.toString(), "Títulos dos Livros", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, livrosStr.toString(), "Títulos dos Livros",
+                        JOptionPane.INFORMATION_MESSAGE);
 
                 List<String> livrosReservados = new ArrayList<>();
                 boolean continuarReservando = true;
@@ -221,11 +249,10 @@ public class Principal {
                 while (continuarReservando) {
                     // Solicitar ao usuário que digite o título do livro
                     String livroEscolhido = JOptionPane.showInputDialog(
-                        null,
-                        "Digite o título do livro para reserva:",
-                        "Cadastro de Reserva",
-                        JOptionPane.PLAIN_MESSAGE
-                    );
+                            null,
+                            "Digite o título do livro para reserva:",
+                            "Cadastro de Reserva",
+                            JOptionPane.PLAIN_MESSAGE);
 
                     // Verificar se o título foi digitado
                     if (livroEscolhido != null && !livroEscolhido.trim().isEmpty()) {
@@ -236,21 +263,20 @@ public class Principal {
                         } else {
                             // Caso o título não esteja na lista
                             JOptionPane.showMessageDialog(null, "Título não encontrado. Tente novamente.");
-                            continue;  // Volta para a solicitação de um novo título
+                            continue; // Volta para a solicitação de um novo título
                         }
                     } else {
                         // O usuário não digitou nada ou cancelou
                         JOptionPane.showMessageDialog(null, "Nenhum livro foi escolhido.");
-                        break;  // Encerra o loop de reserva
+                        break; // Encerra o loop de reserva
                     }
 
                     // Perguntar se o usuário quer adicionar mais livros
                     int resposta = JOptionPane.showConfirmDialog(
-                        null,
-                        "Você deseja adicionar mais um livro para reserva?",
-                        "Adicionar mais livros?",
-                        JOptionPane.YES_NO_OPTION
-                    );
+                            null,
+                            "Você deseja adicionar mais um livro para reserva?",
+                            "Adicionar mais livros?",
+                            JOptionPane.YES_NO_OPTION);
 
                     // Se o usuário escolher "Não", sair do loop
                     if (resposta == JOptionPane.NO_OPTION) {
@@ -266,7 +292,8 @@ public class Principal {
                         // Agora você pode chamar o método cadastrarReserva na classe Aluno
                         alunoLogado.cadastrarReserva(livrosReservados, dataAtual);
 
-                        // Rodar a lista de consumidores e verificar se algum é instância de ILivroReservado
+                        // Rodar a lista de consumidores e verificar se algum é instância de
+                        // ILivroReservado
                         for (Usuario consumidor : consumidores) {
                             if (consumidor instanceof ILivroReservado) {
                                 ILivroReservado livroReservado = (ILivroReservado) consumidor;
@@ -290,14 +317,18 @@ public class Principal {
                 break;
 
             default:
-                JOptionPane.showMessageDialog(null, "Opção inválida. Tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Opção inválida. Tente novamente.", "Erro",
+                        JOptionPane.ERROR_MESSAGE);
                 break;
         }
     }
 
-    /*public static ILivroReservado selecionarConsumidor(Aluno usuario, boolean naListaProdutor){
-
-    }*/
+    /*
+     * public static ILivroReservado selecionarConsumidor(Aluno usuario, boolean
+     * naListaProdutor){
+     * 
+     * }
+     */
 
     public static void listarLivros() {
         List<String> titulos = Livro.listar();

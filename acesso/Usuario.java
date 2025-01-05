@@ -10,7 +10,7 @@ public class Usuario {
     private String senha;
 
     private List<Funcionalidade> funcionalidades;
-    private static List<Usuario> usuarios;
+    private static List<Usuario> usuarios = new ArrayList<>();
 
 
     public Usuario(String nome, String login, String senha){
