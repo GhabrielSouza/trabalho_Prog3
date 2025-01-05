@@ -369,8 +369,7 @@ public class Principal {
         // Verifica se o usuário tem uma reserva
         if (usuario instanceof ILivroReservado) {
             ILivroReservado livroReservado = (ILivroReservado) usuario;
-            JOptionPane.showMessageDialog(null, livroReservado.informarReserva(),
-                    "Informação de Reserva", JOptionPane.INFORMATION_MESSAGE);
+            livroReservado.informarReserva();
         } else {
             JOptionPane.showMessageDialog(null, usuario.getNome() + " não tem reservas.",
                     "Sem Reservas", JOptionPane.WARNING_MESSAGE);
