@@ -64,7 +64,15 @@ public class Livro {
     }
 
     private static Map<Livro, List<Exemplar>> criarBiblioteca() {
-        return new HashMap<>();
+        Map<Livro, List<Exemplar>> biblioteca = new HashMap<>();
+
+        Livro livro1 = new Livro("O Senhor dos Anéis", "J.R.R. Tolkien", "HarperCollins");
+       
+        biblioteca.put(livro1, null);
+
+        criarListaExemplares(biblioteca);
+
+        return biblioteca;
     }   
 
     private static void criarListaExemplares(Map<Livro, List<Exemplar>> biblioteca) {

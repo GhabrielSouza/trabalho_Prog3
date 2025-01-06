@@ -28,11 +28,11 @@ public class Principal {
         funcionalidades.add(Funcionalidade.REM_CONS);
         funcionalidades.add(Funcionalidade.CAD_RESE);
 
-        Livro livro1 = new Livro("1");
-        Livro livro2 = new Livro("2");
-        Livro livro3 = new Livro("3");
-
-
+        // Livro livro1 = new Livro("O Senhor dos Anéis", "J.R.R. Tolkien", "HarperCollins");
+       
+        // Exemplar exemplar1 = new Exemplar(livro1);
+        // Exemplar exemplar2 = new Exemplar(livro1);
+        
         
 
 
