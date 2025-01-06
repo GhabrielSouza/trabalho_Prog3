@@ -4,7 +4,7 @@ import javax.swing.JOptionPane;
 
 import divisao.Setor;
 
-class Professor extends Funcionario implements ILivroReservado {
+public class Professor extends Funcionario implements ILivroReservado {
 
     private Reserva reserva;
 

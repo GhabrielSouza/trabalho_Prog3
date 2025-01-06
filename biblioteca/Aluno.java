@@ -1,6 +1,7 @@
 package biblioteca;
 
 import acesso.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,9 +15,22 @@ public class Aluno extends Usuario implements IReservouLivro  {
 
 
     public Aluno(String nome, String login, String senha, int matricula){
+
         super(nome, login, senha);
+
         this.matricula = matricula;
+
+        if (funcionalidades == null) {
+            funcionalidades = new ArrayList<>();
+            funcionalidades.add(Funcionalidade.CAD_CONS);
+            funcionalidades.add(Funcionalidade.REM_CONS);
+            funcionalidades.add(Funcionalidade.CAD_RESE);
+            System.out.println("preeeennncheeuu");
+        }
+
     }
+
+   
 
     public List<Reserva> getReservas() {
         return reservas;
