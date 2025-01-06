@@ -1,6 +1,12 @@
 package acesso;
 
 import java.util.List;
+
+import biblioteca.Aluno;
+import biblioteca.Bibliotecario;
+import biblioteca.Professor;
+import divisao.Setor;
+
 import java.util.ArrayList;
 
 
@@ -12,7 +18,6 @@ public class Usuario {
     private List<Funcionalidade> funcionalidades = null;
     private static List<Usuario> usuarios = null;
 
-
     public Usuario(String nome, String login, String senha){
         this.nome = nome;
         this.login = login;
@@ -22,6 +27,11 @@ public class Usuario {
             usuarios = new ArrayList<>();
         }
         usuarios.add(this);
+
+        this.funcionalidades = new ArrayList<>();
+        this.funcionalidades.add(Funcionalidade.CAD_CONS);
+        this.funcionalidades.add(Funcionalidade.REM_CONS);
+        this.funcionalidades.add(Funcionalidade.CAD_RESE);
     }
 
     public Usuario(String nome, String login, String senha, List<Funcionalidade> funcionalidades){

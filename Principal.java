@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 import acesso.*;
 import biblioteca.*;
+import divisao.Setor;
 
 public class Principal {
 
@@ -23,6 +24,11 @@ public class Principal {
         funcionalidades.add(Funcionalidade.CAD_CONS);
         funcionalidades.add(Funcionalidade.REM_CONS);
         funcionalidades.add(Funcionalidade.CAD_RESE);
+
+
+        Aluno aluno1 = new Aluno("Roberto Santos", "rsantos", "123456", 00154);
+
+        Usuario usuario1 = new Usuario("LUIIIZ", "Luiz1", "1234", funcionalidades);
 
         Usuario usuarioLogado = null;
         // while (usuarioLogado == null) {
