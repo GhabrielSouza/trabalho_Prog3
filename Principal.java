@@ -28,8 +28,8 @@ public class Principal {
         funcionalidades.add(Funcionalidade.CAD_RESE);
 
         Livro livro1 = new Livro("1");
-        Livro livro2 = new Livro("1");
-        Livro livro3 = new Livro("1");
+        Livro livro2 = new Livro("2");
+        Livro livro3 = new Livro("3");
 
 
         
