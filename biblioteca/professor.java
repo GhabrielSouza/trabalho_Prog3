@@ -15,7 +15,7 @@ public class Professor extends Funcionario implements ILivroReservado {
     @Override
     public void ocorreu(Reserva reserva) {
         this.reserva = reserva;
-        String mensagemRegistro = "Reserva registrada para o professor.";
+        String mensagemRegistro = "Reserva registrada";
         JOptionPane.showMessageDialog(null, mensagemRegistro, "Informacoes de Reservas", JOptionPane.INFORMATION_MESSAGE);
     }
 
