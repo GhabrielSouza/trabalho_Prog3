@@ -409,8 +409,7 @@ public class Principal {
             ILivroReservado livroReservado = (ILivroReservado) usuario;
             livroReservado.informarReserva();
         } else {
-            JOptionPane.showMessageDialog(null, usuario.getNome() + " não tem reservas.",
-                    "Sem Reservas", JOptionPane.WARNING_MESSAGE);
+            //JOptionPane.showMessageDialog(null, usuario.getNome() + " não tem reservas.", "Sem Reservas", JOptionPane.WARNING_MESSAGE);
         }
     }
 }
