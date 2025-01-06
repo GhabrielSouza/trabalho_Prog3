@@ -47,7 +47,7 @@ public class Bibliotecario extends Funcionario implements ILivroReservado {
             return mensagemSemRegistro;
         }
 
-        StringBuilder mensagem = new StringBuilder("Informacoes de Reservas:\n\n");
+        StringBuilder mensagem = new StringBuilder("O usuario: "+ " " + this.getNome()+ "\n" + "do tipo: " + this.getClass() + "\n" +"Informa: \n\n" + "Informacoes de Reservas:\n\n");
 
         for (Emprestimo emprestimo : emprestimos) {
             mensagem.append("Data de Retirada: ").append(emprestimo.getDataRetirada()).append("\n");

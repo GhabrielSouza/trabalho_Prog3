@@ -285,7 +285,6 @@ public class  Principal {
                         
                         if (tituloLivros.contains(livroEscolhido.trim())) {
                             livrosReservados.add(livroEscolhido.trim());
-                            System.out.println("Livro escolhido: " + livroEscolhido);
                         } else {
                             
                             JOptionPane.showMessageDialog(null, "Título não encontrado. Tente novamente.");
