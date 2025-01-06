@@ -28,8 +28,6 @@ public class Aluno extends Usuario implements IReservouLivro  {
 
     }
 
-   
-
     public List<Reserva> getReservas() {
         return reservas;
     }

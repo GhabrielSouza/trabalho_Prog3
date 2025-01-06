@@ -68,7 +68,6 @@ public class Usuario {
         return instaciaDaClasse;
     }
 
-
     public static Usuario obter(String login, String senha){
         for(Usuario usuario : usuarios){
             if(usuario.login.equals(login)  && usuario.senha.equals(senha)){
