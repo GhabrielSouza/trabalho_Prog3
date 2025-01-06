@@ -10,7 +10,7 @@ import java.util.Map;
 public class Aluno extends Usuario implements IReservouLivro  {
     private int matricula;
     private List<Reserva> reservas = new ArrayList<>();
-    private List<ILivroReservado> consumidores;
+    private List<ILivroReservado> consumidores = new ArrayList<>();
     private static List<Funcionalidade> funcionalidades;
 
 
