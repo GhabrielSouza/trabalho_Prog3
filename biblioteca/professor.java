@@ -15,14 +15,16 @@ public class Professor extends Funcionario implements ILivroReservado {
     @Override
     public void ocorreu(Reserva reserva) {
         this.reserva = reserva;
-        System.out.println("Reserva registrada para o professor.");
+        String mensagemRegistro = "Reserva registrada para o professor.";
+        JOptionPane.showMessageDialog(null, mensagemRegistro, "Informacoes de Reservas", JOptionPane.INFORMATION_MESSAGE);
     }
 
     @Override
     public String informarReserva() {
         if (reserva == null) {
             String mensagemSemRegistro = "Nao ha reservas registradas.";
-            JOptionPane.showMessageDialog(null, mensagemSemRegistro, "Informacoes de Reservas", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, mensagemSemRegistro, "Informacoes de Reservas",
+                    JOptionPane.INFORMATION_MESSAGE);
             return mensagemSemRegistro;
         }
 
@@ -33,7 +35,8 @@ public class Professor extends Funcionario implements ILivroReservado {
             mensagem.append("Livro: ").append(livro.getTitulo()).append("\n");
         }
 
-        JOptionPane.showMessageDialog(null, mensagem.toString(), "Informacoes de Reservas", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, mensagem.toString(), "Informacoes de Reservas",
+                JOptionPane.INFORMATION_MESSAGE);
         return mensagem.toString();
     }
 
