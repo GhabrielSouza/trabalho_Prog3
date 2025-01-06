@@ -14,7 +14,6 @@ public class Livro {
 
     public Livro(String titulo){
         this.titulo = titulo;
-        biblioteca.put(this, new ArrayList<>());
     }
 
     
@@ -64,12 +63,24 @@ public class Livro {
     }
 
     private static Map<Livro, List<Exemplar>> criarBiblioteca() {
-        return new HashMap<>();
+        Map<Livro, List<Exemplar>> biblioteca = new HashMap<>();
+
+        Livro livro1 = new Livro("O Senhor dos Anéis", "J.R.R. Tolkien", "HarperCollins");
+       
+
+        biblioteca.put(livro1, null);
+
+        criarListaExemplares(biblioteca);
+
+        return biblioteca;
     }   
 
     private static void criarListaExemplares(Map<Livro, List<Exemplar>> biblioteca) {
-        if (!biblioteca.containsKey(thisLivro)) {
-            biblioteca.put(thisLivro, new ArrayList<>());
-        }
-    } 
+        for (Livro livro : biblioteca.keySet()) {
+            // Verifica se a lista de exemplares do livro já foi criada. Se não, cria uma lista vazia.
+            if (!biblioteca.containsKey(livro)) {
+                biblioteca.put(livro, new ArrayList<>());
+            }
+        } 
+    }   
 }
