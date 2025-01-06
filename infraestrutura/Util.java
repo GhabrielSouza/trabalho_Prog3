@@ -4,21 +4,17 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Util {
-    private Util(){
-        
-    }
+    private Util(){}
 
     public static String obterDataAtual() {
-		LocalDate dataAtual = LocalDate.now();
-		return (dataAtual.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+		return converterDataString(LocalDate.now(), "dd/MM/yyyy");
 	}
 
 	public static String somarDiasData(String stringData, int dias) {
-		DateTimeFormatter formatadorData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		LocalDate data = LocalDate.parse(stringData, formatadorData);
-		LocalDate dataFinal = data.plusDays(dias);
-		return (dataFinal.format(formatadorData));
-	}
+        LocalDate data = converterStringData(stringData, "dd/MM/yyyy");
+        LocalDate dataFinal = data.plusDays(dias);
+        return converterDataString(dataFinal, "dd/MM/yyyy");
+    }
 
 	public static LocalDate converterStringData(String stringData, String formato) {
 		DateTimeFormatter formatadorData = DateTimeFormatter.ofPattern(formato);
