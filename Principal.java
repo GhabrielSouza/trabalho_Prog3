@@ -349,9 +349,7 @@ public class Principal {
                 break;
 
             case 3: // Sair
-                for (Usuario consumidor : consumidores) {
-                    sair(consumidor);
-                }
+                    sair(usuario);
                 break;
 
             default:
@@ -403,13 +401,21 @@ public class Principal {
     }
 
     public static void sair(Usuario usuario) {
+        for (Usuario consumidor : consumidores) {
+                    // Verifica se o usuário tem uma reserva
+            if (consumidor instanceof ILivroReservado) {
+                ILivroReservado livroReservado = (ILivroReservado) consumidor ;
+                livroReservado.informarReserva();
+            }
+            
+            if(consumidor instanceof Aluno){
 
-        // Verifica se o usuário tem uma reserva
-        if (usuario instanceof ILivroReservado) {
-            ILivroReservado livroReservado = (ILivroReservado) usuario;
-            livroReservado.informarReserva();
-        } else {
-            //JOptionPane.showMessageDialog(null, usuario.getNome() + " não tem reservas.", "Sem Reservas", JOptionPane.WARNING_MESSAGE);
+            }
+            else {
+                //JOptionPane.showMessageDialog(null, usuario.getNome() + " não tem reservas.", "Sem Reservas", JOptionPane.WARNING_MESSAGE);
+            }
         }
+
+        JOptionPane.showMessageDialog(null, "Usuario: "+ usuario.getNome() + " do tipo" + usuario.getClass() + ", deixou o sistema.", TITULO, JOptionPane.WARNING_MESSAGE);
     }
 }
