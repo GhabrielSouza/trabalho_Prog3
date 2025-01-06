@@ -17,9 +17,6 @@ public class Bibliotecario extends Funcionario implements ILivroReservado {
     public void cadastrarEmprestimo(Reserva reserva) {
         Emprestimo emprestimo = new Emprestimo(reserva);
         emprestimos.add(emprestimo);
-
-        JOptionPane.showMessageDialog(null, "Empréstimo cadastrado para a reserva: " + reserva.toString(),
-                "Cadastro de Empréstimo", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void listarEmprestimos() {
@@ -38,7 +35,6 @@ public class Bibliotecario extends Funcionario implements ILivroReservado {
 
     @Override
     public void ocorreu(Reserva reserva) {
-        //JOptionPane.showMessageDialog(null, "Reserva registrada para o professor: " + reserva.toString(), "Registro de Reserva", JOptionPane.INFORMATION_MESSAGE);
         cadastrarEmprestimo(reserva);
     }
 
