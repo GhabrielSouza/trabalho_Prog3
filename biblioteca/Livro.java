@@ -14,11 +14,12 @@ public class Livro {
 
     public Livro(String titulo){
         this.titulo = titulo;
+        biblioteca.put(this, new ArrayList<>());
     }
 
     
     public Livro(String titulo, String autor, String editora){
-        this.titulo = titulo;
+        this(titulo);
         this.autor = autor;
         this.editora = editora;
     }
@@ -63,6 +64,12 @@ public class Livro {
     }
 
     private static Map<Livro, List<Exemplar>> criarBiblioteca() {
-    return new HashMap<>();
-}
+        return new HashMap<>();
+    }   
+
+    private static void criarListaExemplares(Map<Livro, List<Exemplar>> biblioteca) {
+        if (!biblioteca.containsKey(thisLivro)) {
+            biblioteca.put(thisLivro, new ArrayList<>());
+        }
+    } 
 }

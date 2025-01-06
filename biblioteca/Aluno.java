@@ -15,17 +15,10 @@ public class Aluno extends Usuario implements IReservouLivro  {
 
 
     public Aluno(String nome, String login, String senha, int matricula){
-        super(nome, login, senha, funcionalidades);
+
+        super(nome, login, senha);
+
         this.matricula = matricula;
-
-        if (funcionalidades == null) {
-            funcionalidades = new ArrayList<>();
-            funcionalidades.add(Funcionalidade.CAD_CONS);
-            funcionalidades.add(Funcionalidade.REM_CONS);
-            funcionalidades.add(Funcionalidade.CAD_RESE);
-            System.out.println("preeeennncheeuu");
-        }
-
     }
 
     public List<Reserva> getReservas() {
@@ -36,10 +29,12 @@ public class Aluno extends Usuario implements IReservouLivro  {
     }
 
     public void cadastrarReserva(List<String> tituloLivros, String data){
-        for (String titulo : tituloLivros) {
-                Reserva reserva = new Reserva(data, tituloLivros );
-                reservas.add(reserva);
+        reservas.add(new Reserva(data, tituloLivros));
+        System.out.println(data);
+        for (String titutlo : tituloLivros) {
+            System.out.println(titutlo);
         }
+        System.out.println("occorreu reserva");
     }
 
     public void adicionar(ILivroReservado livroReservado){
