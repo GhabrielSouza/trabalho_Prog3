@@ -45,7 +45,7 @@ public class Principal {
                     opcoesMenu,
                     opcoesMenu[0]);
 
-            if (escolha == -1) {
+            if (escolha == -1 || escolha == 3) {
                 JOptionPane.showMessageDialog(null, "Menu encerrado.");
                 break;
             }
