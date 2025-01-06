@@ -18,12 +18,16 @@ import divisao.Setor;
 public class Principal {
 
     private static String TITULO = "Sistema Bibliotecário | v1.0";
-
+    public static  List<Usuario> usuariosDisponiveis = Usuario.listar(Usuario.class);
+    public static List<Usuario> consumidores = new ArrayList<>();
+  
     public static void main(String[] args) {
         List<Funcionalidade> funcionalidades = new ArrayList<>();
         funcionalidades.add(Funcionalidade.CAD_CONS);
         funcionalidades.add(Funcionalidade.REM_CONS);
         funcionalidades.add(Funcionalidade.CAD_RESE);
+
+        
 
 
 
@@ -179,17 +183,20 @@ public class Principal {
             return;
         }
 
-        List<Usuario> usuariosDisponiveis = Usuario.listar(Usuario.class);
-        List<Usuario> consumidores = new ArrayList<>();
+       
+        List<String> nomesDisponiveis = null;
         int opcao;
 
         switch (funcionalidadeSelecionada) {
             case 0:
-                // Cadastrar Consumidor
-                // Crie o JComboBox com os objetos Usuario diretamente
-                JComboBox<Usuario> comboBoxA = new JComboBox<>(usuariosDisponiveis.toArray(new Usuario[0]));
+            // Verifica se há usuários disponíveis
+            if (usuariosDisponiveis.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Não há usuários disponíveis para cadastrar.");
+            } else {
+                // Cria o JComboBox com os nomes dos usuários disponíveis
+                JComboBox<String> comboBoxA = new JComboBox<>(usuariosDisponiveis.stream().map(Usuario::getNome).toArray(String[]::new));
 
-                // Mostre o JComboBox em um JOptionPane
+                // Mostra o JComboBox em um JOptionPane
                 opcao = JOptionPane.showConfirmDialog(
                         null,
                         comboBoxA,
@@ -197,42 +204,55 @@ public class Principal {
                         JOptionPane.OK_CANCEL_OPTION,
                         JOptionPane.PLAIN_MESSAGE);
 
-                // Se o usuário pressionar OK, obtenha o objeto Usuario selecionado
+                // Se o usuário pressionar OK, adicione o usuário à lista de consumidores
                 if (opcao == JOptionPane.OK_OPTION) {
-                    Usuario usuarioSelecionado = (Usuario) comboBoxA.getSelectedItem();
+                    Usuario usuarioSelecionado = usuariosDisponiveis.get(comboBoxA.getSelectedIndex());
 
                     consumidores.add(usuarioSelecionado);
                     usuariosDisponiveis.remove(usuarioSelecionado);
 
-                    JOptionPane.showMessageDialog(null, "Usuário selecionado: " + usuarioSelecionado.getNome());
-                    // Aqui você pode adicionar a lógica para cadastrar o consumidor, utilizando o
-                    // usuarioSelecionado
+                    JOptionPane.showMessageDialog(null, "Usuário selecionado e cadastrado com sucesso.");
                 }
-                break;
+            }
+            break;
 
-            case 1: // Remover Consumidor
-                JComboBox<Usuario> comboBoxR = new JComboBox<>(consumidores.toArray(new Usuario[0]));
-
+            case 1:
+            // Remover Consumidor
+            if (consumidores.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Não há consumidores para remover.");
+            } else {
+                // Crie uma lista com os nomes dos consumidores
+                List<String> nomesConsumidores = new ArrayList<>();
+                for (Usuario consumidor : consumidores) {
+                    nomesConsumidores.add(consumidor.getNome());
+                }
+        
+                // Crie o JComboBox com os nomes dos consumidores
+                JComboBox<String> comboBoxRemover = new JComboBox<>(nomesConsumidores.toArray(new String[0]));
+        
                 // Mostre o JComboBox em um JOptionPane
                 opcao = JOptionPane.showConfirmDialog(
                         null,
-                        comboBoxR,
-                        "Selecione um Usuário",
+                        comboBoxRemover,
+                        "Selecione um Consumidor para Remover",
                         JOptionPane.OK_CANCEL_OPTION,
                         JOptionPane.PLAIN_MESSAGE);
-
-                // Se o usuário pressionar OK, obtenha o objeto Usuario selecionado
+        
+                // Se o usuário pressionar OK, obtenha o índice do consumidor selecionado
                 if (opcao == JOptionPane.OK_OPTION) {
-                    Usuario usuarioSelecionado = (Usuario) comboBoxR.getSelectedItem();
-
-                    usuariosDisponiveis.add(usuarioSelecionado);
-                    consumidores.remove(usuarioSelecionado);
-
-                    JOptionPane.showMessageDialog(null, "Usuário selecionado: " + usuarioSelecionado.getNome());
-                    // Aqui você pode adicionar a lógica para cadastrar o consumidor, utilizando o
-                    // usuarioSelecionado
+                    int consumidorSelecionado = comboBoxRemover.getSelectedIndex();
+        
+                    // Remova o consumidor da lista de consumidores
+                    Usuario consumidorARemover = consumidores.get(consumidorSelecionado);
+                    consumidores.remove(consumidorSelecionado);
+        
+                    // Adicione de volta na lista de usuários disponíveis
+                    usuariosDisponiveis.add(consumidorARemover);
+        
+                    JOptionPane.showMessageDialog(null, "Consumidor removido com sucesso.");
                 }
-                break;
+            }
+            break;
 
             case 2:
                 // Listar todos os títulos de livros na biblioteca
