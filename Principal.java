@@ -412,6 +412,6 @@ public class Principal {
             }
         }
 
-        JOptionPane.showMessageDialog(null, "Usuario: "+ usuario.getNome() + " do tipo" + usuario.getClass() + ", deixou o sistema.", TITULO, JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Usuario: "+ usuario.getNome() + " do tipo " + usuario.getClass() + ", deixou o sistema.", TITULO, JOptionPane.WARNING_MESSAGE);
     }
 }
