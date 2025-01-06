@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 import acesso.*;
 import biblioteca.*;
 import divisao.Setor;
+import infraestrutura.Util;
 
 public class Principal {
 
@@ -321,11 +322,13 @@ public class Principal {
 
                 if (!livrosReservados.isEmpty()) {
                     // Registrar a reserva com a data atual
-                    String dataAtual = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+                    String dataAtual = Util.obterDataAtual();
                     if (usuario instanceof Aluno) {
                         Aluno alunoLogado = (Aluno) usuario;
                         // Agora você pode chamar o método cadastrarReserva na classe Aluno
+                        System.out.println("1");
                         alunoLogado.cadastrarReserva(livrosReservados, dataAtual);
+                        System.out.println("2");
 
                         // Rodar a lista de consumidores e verificar se algum é instância de
                         // ILivroReservado

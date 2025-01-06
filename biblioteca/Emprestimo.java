@@ -11,8 +11,9 @@ public class Emprestimo {
     private List<Exemplar> exemplares;
 
     public Emprestimo(Reserva reserva) {
+        dataRetirada = Util.obterDataAtual();
         dataDevolucao = Util.somarDiasData(dataRetirada, 7);
-        dataRetirada = reserva.getData();
+        
         exemplares = carregarExemplares( reserva.getLivros());
     }
 
