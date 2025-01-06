@@ -33,10 +33,6 @@ public class Principal {
         // Exemplar exemplar1 = new Exemplar(livro1);
         // Exemplar exemplar2 = new Exemplar(livro1);
         
-        
-
-
-
         Usuario usuario1 = new Usuario("LUIIIZ", "Luiz1", "1234", funcionalidades);
 
         Usuario usuarioLogado = null;
