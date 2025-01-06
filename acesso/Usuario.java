@@ -26,12 +26,12 @@ public class Usuario {
         if (usuarios == null) {
             usuarios = new ArrayList<>();
         }
-        usuarios.add(this);
-
-        this.funcionalidades = new ArrayList<>();
-        this.funcionalidades.add(Funcionalidade.CAD_CONS);
-        this.funcionalidades.add(Funcionalidade.REM_CONS);
-        this.funcionalidades.add(Funcionalidade.CAD_RESE);
+        
+        List<Funcionalidade> funcs = new ArrayList<>();
+        funcs.add(Funcionalidade.CAD_CONS);
+        funcs.add(Funcionalidade.REM_CONS);
+        funcs.add(Funcionalidade.CAD_RESE);
+        this.funcionalidades = funcs;
     }
 
     public Usuario(String nome, String login, String senha, List<Funcionalidade> funcionalidades){
@@ -42,6 +42,13 @@ public class Usuario {
         }
         this.funcionalidades = funcionalidades;
     }
+
+    static {
+		usuarios = new ArrayList<Usuario>();
+		usuarios.add(new Aluno("Roberto Santos", "rsantos", "123456", 00154));
+		usuarios.add(new Bibliotecario("Joana Silva", "jsilva", "654321", "09945789632", new Setor("ADM")));
+		usuarios.add(new Professor("José Maria Santos", "jmsantos", "132465", "08632176245", new Setor("Matematica")));
+	}
 
     public String getNome(){
         return nome;

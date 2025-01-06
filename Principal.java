@@ -26,7 +26,6 @@ public class Principal {
         funcionalidades.add(Funcionalidade.CAD_RESE);
 
 
-        Aluno aluno1 = new Aluno("Roberto Santos", "rsantos", "123456", 00154);
 
         Usuario usuario1 = new Usuario("LUIIIZ", "Luiz1", "1234", funcionalidades);
 

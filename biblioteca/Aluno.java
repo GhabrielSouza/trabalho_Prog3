@@ -19,15 +19,6 @@ public class Aluno extends Usuario implements IReservouLivro  {
         super(nome, login, senha);
 
         this.matricula = matricula;
-
-        if (funcionalidades == null) {
-            funcionalidades = new ArrayList<>();
-            funcionalidades.add(Funcionalidade.CAD_CONS);
-            funcionalidades.add(Funcionalidade.REM_CONS);
-            funcionalidades.add(Funcionalidade.CAD_RESE);
-            System.out.println("preeeennncheeuu");
-        }
-
     }
 
    
