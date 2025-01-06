@@ -46,16 +46,16 @@ public class Livro {
     }
 
     public static Exemplar obterExemplar(Livro livro) {
-        List<Exemplar> exemplares = biblioteca.get(livro);  // Obter lista de exemplares do livro
-        if (exemplares != null && !exemplares.isEmpty()) {  // Verificar se a lista não está vazia
-            for (Exemplar exemplar : exemplares) {  // Iterar sobre os exemplares
-                if (exemplar.getSituacao() == 1) {  // Verificar se o exemplar está disponível (situacao == 0)
-                    exemplar.setSituacao(0);  // Alterar a situação para 1, por exemplo, para indicar que foi retirado
-                    return exemplar;  // Retornar o exemplar encontrado
+        List<Exemplar> exemplares = biblioteca.get(livro); 
+        if (exemplares != null && !exemplares.isEmpty()) {  
+            for (Exemplar exemplar : exemplares) {
+                if (exemplar.getSituacao() == 1) { 
+                    exemplar.setSituacao(0);  
+                    return exemplar;
                 }
             }
         }
-        return null;  // Retornar null se não encontrar um exemplar disponível
+        return null; 
     }
     public static List<String> listar(){
         List<String> listagem = new ArrayList<>();
@@ -70,9 +70,11 @@ public class Livro {
         Map<Livro, List<Exemplar>> biblioteca = new HashMap<>();
 
         Livro livro1 = new Livro("O Senhor dos Anéis", "J.R.R. Tolkien", "HarperCollins");
+        Livro livro2 = new Livro("Java: por que?", "Cayo Fontana", "HarperCollins");
        
 
         biblioteca.put(livro1, null);
+        biblioteca.put(livro2, null);
 
         criarListaExemplares(biblioteca);
 
@@ -81,17 +83,17 @@ public class Livro {
 
     private static void criarListaExemplares(Map<Livro, List<Exemplar>> biblioteca) {
         for (Livro livro : biblioteca.keySet()) {
-            // Verifica se a lista de exemplares do livro já foi criada. Se não, cria uma lista vazia.
-            if (!biblioteca.containsKey(livro)) {
-                List<Exemplar> exemplares = new ArrayList<>();
+            List<Exemplar> exemplares = biblioteca.get(livro);
+            
+            if (exemplares == null) {
+                exemplares = new ArrayList<>();
                 
                 for (int i = 0; i < 5; i++) {
                     exemplares.add(new Exemplar(livro));
                 }
-                biblioteca.put(livro,exemplares);
+                
+                biblioteca.put(livro, exemplares);
             }
-
-            
-        } 
-    }   
+        }
+    }
 }

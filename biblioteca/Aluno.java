@@ -30,7 +30,6 @@ public class Aluno extends Usuario implements IReservouLivro  {
 
     public void cadastrarReserva(List<String> tituloLivros, String data){
         reservas.add(new Reserva(data, tituloLivros));
-        System.out.println(data);
     }
 
     public void adicionar(ILivroReservado livroReservado){

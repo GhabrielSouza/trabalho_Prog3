@@ -55,11 +55,12 @@ public class Bibliotecario extends Funcionario implements ILivroReservado {
 
             for (Exemplar exemplar : emprestimo.getExemplares()) {
                 Livro livro = exemplar.getLivro();
+                Exemplar exemplo = Livro.obterExemplar(livro);
                 mensagem.append("Livro: ").append(livro.getTitulo()).append("\n");
                 mensagem.append("Autor: ").append(livro.getAutor()).append("\n");
                 mensagem.append("Editora: ").append(livro.getEditora()).append("\n");
-                mensagem.append("Exemplar Codigo: ").append(exemplar.getCodigo()).append("\n");
-                mensagem.append("Situação: ").append(exemplar.getSituacao()).append("\n\n");
+                mensagem.append("Exemplar Codigo: ").append(exemplo.getCodigo()).append("\n");
+                mensagem.append("Situação: ").append(exemplo.getSituacao()).append("\n\n");
             }
         }
 
