@@ -3,6 +3,7 @@ package biblioteca;
 import javax.swing.JOptionPane;
 
 import divisao.Setor;
+import acesso.*;
 
 public class Professor extends Funcionario implements ILivroReservado {
 
@@ -26,16 +27,14 @@ public class Professor extends Funcionario implements ILivroReservado {
             return mensagemSemRegistro;
         }
 
-        StringBuilder mensagem = new StringBuilder("Reserva do Professor:\n\n");
+        StringBuilder mensagem = new StringBuilder("O usuario: "+ " " + this.getNome()+ "\n" + "do tipo: " + this.getClass() + "\n" +"Informa: \n\n" + "Informacoes de Reservas:\n\n");
 
         mensagem.append("Data de Reserva: ").append(reserva.getData()).append("\n");
         for (Livro livro : reserva.getLivros()) {
             mensagem.append("Livro: ").append(livro.getTitulo()).append("\n");
         }
 
-        JOptionPane.showMessageDialog(null, mensagem.toString(), "Informacoes de Reservas",
-                JOptionPane.INFORMATION_MESSAGE);
-        return mensagem.toString();
+        JOptionPane.showMessageDialog(null, mensagem.toString(), "Informacoes de Reservas", JOptionPane.INFORMATION_MESSAGE); return mensagem.toString();
     }
 
 }
