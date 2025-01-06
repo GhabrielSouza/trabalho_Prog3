@@ -63,6 +63,15 @@ public class Livro {
     }
 
     private static Map<Livro, List<Exemplar>> criarBiblioteca() {
-    return new HashMap<>();
-}
+        return new HashMap<>();
+    }   
+
+    private static void criarListaExemplares(Map<Livro, List<Exemplar>> biblioteca) {
+        for (Livro livro : biblioteca.keySet()) {
+            // Verifica se a lista de exemplares do livro já foi criada. Se não, cria uma lista vazia.
+            if (!biblioteca.containsKey(livro)) {
+                biblioteca.put(livro, new ArrayList<>());
+            }
+        }
+    }
 }

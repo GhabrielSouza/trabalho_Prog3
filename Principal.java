@@ -27,6 +27,11 @@ public class Principal {
         funcionalidades.add(Funcionalidade.REM_CONS);
         funcionalidades.add(Funcionalidade.CAD_RESE);
 
+        Livro livro1 = new Livro("1");
+        Livro livro2 = new Livro("1");
+        Livro livro3 = new Livro("1");
+
+
         
 
 
