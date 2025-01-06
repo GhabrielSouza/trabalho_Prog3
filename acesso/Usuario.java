@@ -9,7 +9,7 @@ public class Usuario {
     private String login;
     private String senha;
 
-    private List<Funcionalidade> funcionalidades;
+    private List<Funcionalidade> funcionalidades = null;
     private static List<Usuario> usuarios = null;
 
 
@@ -26,6 +26,10 @@ public class Usuario {
 
     public Usuario(String nome, String login, String senha, List<Funcionalidade> funcionalidades){
         this(nome, login, senha);
+
+        if(funcionalidades == null){
+            funcionalidades = new ArrayList<>();
+        }
         this.funcionalidades = funcionalidades;
     }
 

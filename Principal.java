@@ -19,6 +19,10 @@ public class Principal {
     private static String TITULO = "Sistema Bibliotecário | v1.0";
 
     public static void main(String[] args) {
+        List<Funcionalidade> funcionalidades = new ArrayList<>();
+        funcionalidades.add(Funcionalidade.CAD_CONS);
+        funcionalidades.add(Funcionalidade.REM_CONS);
+        funcionalidades.add(Funcionalidade.CAD_RESE);
 
         Usuario usuarioLogado = null;
         // while (usuarioLogado == null) {
