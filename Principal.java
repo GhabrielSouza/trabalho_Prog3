@@ -19,8 +19,8 @@ import infraestrutura.Util;
 public class Principal {
 
     private static String TITULO = "Sistema Bibliotecário | v1.0";
-    public static  List<Usuario> usuariosDisponiveis = Usuario.listar(Usuario.class);
-    public static List<Usuario> consumidores = new ArrayList<>();
+    public static List<ILivroReservado> usuariosDisponiveis = Usuario.listar(ILivroReservado.class);
+    //public static List<Usuario> consumidores = new ArrayList<>();
   
     public static void main(String[] args) {
         List<Funcionalidade> funcionalidades = new ArrayList<>();
@@ -185,51 +185,55 @@ public class Principal {
             return;
         }
 
-       
+        Aluno aluno = (Aluno) usuario;
         List<String> nomesDisponiveis = null;
+        List<ILivroReservado> consumidores = aluno.getConsumidores();
         int opcao;
 
         switch (funcionalidadeSelecionada) {
             case 0:
-            // Verifica se há usuários disponíveis
+            // Verifica se há consumidores disponíveis
             if (usuariosDisponiveis.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Não há usuários disponíveis para cadastrar.");
+                JOptionPane.showMessageDialog(null, "Não há consumidores disponíveis para cadastrar.");
             } else {
-                // Cria o JComboBox com os nomes dos usuários disponíveis
-                JComboBox<String> comboBoxA = new JComboBox<>(usuariosDisponiveis.stream().map(Usuario::getNome).toArray(String[]::new));
-
+                // Cria o JComboBox com os nomes dos consumidores disponíveis
+                JComboBox<String> comboBoxA = new JComboBox<>(usuariosDisponiveis.stream()
+                .map(u -> ((Usuario) u).getNome())
+                .toArray(String[]::new));
+        
                 // Mostra o JComboBox em um JOptionPane
                 opcao = JOptionPane.showConfirmDialog(
                         null,
                         comboBoxA,
-                        "Selecione um Usuário",
+                        "Selecione um Consumidor",
                         JOptionPane.OK_CANCEL_OPTION,
                         JOptionPane.PLAIN_MESSAGE);
-
-                // Se o usuário pressionar OK, adicione o usuário à lista de consumidores
+        
+                // Se o usuário pressionar OK, adicione o consumidor à lista de consumidores cadastrados
                 if (opcao == JOptionPane.OK_OPTION) {
-                    Usuario usuarioSelecionado = usuariosDisponiveis.get(comboBoxA.getSelectedIndex());
-
-                    consumidores.add(usuarioSelecionado);
-                    usuariosDisponiveis.remove(usuarioSelecionado);
-
-                    JOptionPane.showMessageDialog(null, "Usuário selecionado e cadastrado com sucesso.");
+                    ILivroReservado consumidorSelecionado = usuariosDisponiveis.get(comboBoxA.getSelectedIndex());
+        
+                    consumidores.add(consumidorSelecionado);  // Adiciona à lista de consumidores
+                    usuariosDisponiveis.remove(consumidorSelecionado);  // Remove da lista de disponíveis
+        
+                    JOptionPane.showMessageDialog(null, "Consumidor selecionado e cadastrado com sucesso.");
                 }
             }
             break;
-
-            case 1:
+        
+        case 1:
             // Remover Consumidor
             if (consumidores.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Não há consumidores para remover.");
             } else {
-                // Crie uma lista com os nomes dos consumidores
+                // Crie uma lista com os nomes dos consumidores cadastrados
                 List<String> nomesConsumidores = new ArrayList<>();
-                for (Usuario consumidor : consumidores) {
-                    nomesConsumidores.add(consumidor.getNome());
+                for (ILivroReservado consumidor : consumidores) {
+                    Usuario user = (Usuario) consumidor;
+                    nomesConsumidores.add(user.getNome());  // Assumindo que a interface ILivroReservado tem o método getNome()
                 }
         
-                // Crie o JComboBox com os nomes dos consumidores
+                // Crie o JComboBox com os nomes dos consumidores cadastrados
                 JComboBox<String> comboBoxRemover = new JComboBox<>(nomesConsumidores.toArray(new String[0]));
         
                 // Mostre o JComboBox em um JOptionPane
@@ -245,17 +249,16 @@ public class Principal {
                     int consumidorSelecionado = comboBoxRemover.getSelectedIndex();
         
                     // Remova o consumidor da lista de consumidores
-                    Usuario consumidorARemover = consumidores.get(consumidorSelecionado);
+                    ILivroReservado consumidorARemover = consumidores.get(consumidorSelecionado);
                     consumidores.remove(consumidorSelecionado);
         
-                    // Adicione de volta na lista de usuários disponíveis
+                    // Adicione de volta na lista de consumidores disponíveis
                     usuariosDisponiveis.add(consumidorARemover);
         
                     JOptionPane.showMessageDialog(null, "Consumidor removido com sucesso.");
                 }
             }
             break;
-
             case 2:
                 // Listar todos os títulos de livros na biblioteca
                 List<String> tituloLivros = Livro.listar();
@@ -328,7 +331,7 @@ public class Principal {
 
                         // Rodar a lista de consumidores e verificar se algum é instância de
                         // ILivroReservado
-                        for (Usuario consumidor : consumidores) {
+                        for (ILivroReservado consumidor : consumidores) {
                             if (consumidor instanceof ILivroReservado) {
                                 ILivroReservado livroReservado = (ILivroReservado) consumidor;
                                 // Chama o método ocorreuReserva()
@@ -397,7 +400,10 @@ public class Principal {
     }
 
     public static void sair(Usuario usuario) {
-        for (Usuario consumidor : consumidores) {
+        Aluno aluno = (Aluno) usuario;
+        List<ILivroReservado> consumidores = aluno.getConsumidores();
+
+        for (ILivroReservado consumidor : consumidores) {
                     // Verifica se o usuário tem uma reserva
             if (consumidor instanceof ILivroReservado) {
                 ILivroReservado livroReservado = (ILivroReservado) consumidor ;
