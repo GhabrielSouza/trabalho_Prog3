@@ -10,7 +10,9 @@ public class Exemplar {
 
     public Exemplar(Livro livro){
         this.livro = livro;
-        dataAquisicao = Util.obterDataAtual();
+        this.dataAquisicao = Util.obterDataAtual();
+        this.situacao = 1;
+        this.codigo = 1;  
     }
 
     public int getCodigo(){

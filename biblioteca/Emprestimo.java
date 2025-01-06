@@ -14,7 +14,7 @@ public class Emprestimo {
         dataRetirada = Util.obterDataAtual();
         dataDevolucao = Util.somarDiasData(dataRetirada, 7);
         
-        exemplares = carregarExemplares( reserva.getLivros());
+        exemplares = carregarExemplares(reserva.getLivros());
     }
 
     public String getDataRetirada(){

@@ -46,13 +46,17 @@ public class Livro {
     }
 
     public static Exemplar obterExemplar(Livro livro) {
-        List<Exemplar> exemplares = biblioteca.get(livro);
-        if (exemplares != null && !exemplares.isEmpty()) {
-            return exemplares.get(0); 
+        List<Exemplar> exemplares = biblioteca.get(livro);  // Obter lista de exemplares do livro
+        if (exemplares != null && !exemplares.isEmpty()) {  // Verificar se a lista não está vazia
+            for (Exemplar exemplar : exemplares) {  // Iterar sobre os exemplares
+                if (exemplar.getSituacao() == 1) {  // Verificar se o exemplar está disponível (situacao == 0)
+                    exemplar.setSituacao(0);  // Alterar a situação para 1, por exemplo, para indicar que foi retirado
+                    return exemplar;  // Retornar o exemplar encontrado
+                }
+            }
         }
-        return null; 
+        return null;  // Retornar null se não encontrar um exemplar disponível
     }
-
     public static List<String> listar(){
         List<String> listagem = new ArrayList<>();
         for (Livro livro : biblioteca.keySet()) {
@@ -79,8 +83,15 @@ public class Livro {
         for (Livro livro : biblioteca.keySet()) {
             // Verifica se a lista de exemplares do livro já foi criada. Se não, cria uma lista vazia.
             if (!biblioteca.containsKey(livro)) {
-                biblioteca.put(livro, new ArrayList<>());
+                List<Exemplar> exemplares = new ArrayList<>();
+                
+                for (int i = 0; i < 5; i++) {
+                    exemplares.add(new Exemplar(livro));
+                }
+                biblioteca.put(livro,exemplares);
             }
+
+            
         } 
     }   
 }

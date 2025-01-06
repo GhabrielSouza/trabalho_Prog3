@@ -5,8 +5,6 @@ import java.util.List;
 import divisao.Setor;
 import javax.swing.JOptionPane;
 
-import acesso.Usuario;
-
 public class Bibliotecario extends Funcionario implements ILivroReservado {
 
     private List<Emprestimo> emprestimos;
@@ -49,7 +47,7 @@ public class Bibliotecario extends Funcionario implements ILivroReservado {
             return mensagemSemRegistro;
         }
 
-        StringBuilder mensagem = new StringBuilder("O usuario: "+ " " + this.getNome()+ "\n" + "do tipo: " + this.getClass() + "\n" +"Informa: \n\n" + "Informacoes de Reservas:\n\n");
+        StringBuilder mensagem = new StringBuilder("Informacoes de Reservas:\n\n");
 
         for (Emprestimo emprestimo : emprestimos) {
             mensagem.append("Data de Retirada: ").append(emprestimo.getDataRetirada()).append("\n");
@@ -65,7 +63,7 @@ public class Bibliotecario extends Funcionario implements ILivroReservado {
             }
         }
 
-        JOptionPane.showMessageDialog(null, mensagem.toString(), "Informacoes da Reserva", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, mensagem.toString(), "Informacoes de Reservas", JOptionPane.INFORMATION_MESSAGE);
         return mensagem.toString();
     }
 
