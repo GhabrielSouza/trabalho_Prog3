@@ -14,7 +14,7 @@ public class Aluno extends Usuario implements IReservouLivro  {
 
 
     public Aluno(String nome, String login, String senha, int matricula){
-        super(nome, nome, senha);
+        super(nome, login, senha);
         this.matricula = matricula;
     }
 

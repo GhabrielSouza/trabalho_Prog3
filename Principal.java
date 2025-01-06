@@ -46,6 +46,7 @@ public class Principal {
                     opcoesMenu[0]);
 
             if (escolha == -1 || escolha == 3) {
+                Principal.processarFuncionalidade(usuarioLogado, 3);
                 JOptionPane.showMessageDialog(null, "Menu encerrado.");
                 break;
             }
